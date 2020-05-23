@@ -2,7 +2,7 @@ const { mongoose } = require('mongoose');
 
 const bodyParser = require('body-parser');
 
-const { Favourite, User } = require('../db/models');
+//const { Favourite, User } = require('../db/models');
 
 const jwt = require('jsonwebtoken');
 
