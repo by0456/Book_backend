@@ -9,10 +9,11 @@ const jwt = require('jsonwebtoken');
 const googleapi = require('./modules/booksqueryHandler')
 
 const PORT = process.env.PORT || 3050;
-const { Favourite, User, BookComment } = require('./db/models');
+const { Favourite, User, BookComment, BookScore } = require('./db/models');
 
 const favourite = require('./modules/favourites');
 const bookComment = require('./modules/bookComments');
+const bookScore = require('./modules/bookScore');
 //const users = require('./modules/users');
 
 const Authenticate = require('./modules/authenticate');
@@ -47,9 +48,16 @@ app.get('/favourite', favourite.getFavourite);
 app.get('/favourite/:id', favourite.getFavouriteDetails);
 app.post('/favourite', favourite.addFavourite);
 app.delete('/favourite/:id', favourite.deleteFavourite);
+
 app.get('/favourite/:id/comment', bookComment.getComment);
 app.post('/favourite/:id/comment', bookComment.addComment);
 app.delete('/favourite/:id/comment/:commentId', bookComment.deleteComment);
+app.put('/favourite/:id/comment/:commentId', bookComment.editComment);
+
+app.get('/favourite/:id/bookScore', bookScore.getScore);
+app.post('/favourite/:id/bookScore', bookScore.addScore);
+app.delete('/favourite/:id/bookScore/:bookScoreId', bookScore.deleteScore);
+app.put('/favourite/:id/bookScore/:bookScoreId', bookScore.editScore);
 
 
 

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const BookCommentSchema = new mongoose.Schema({
+const BookScoreSchema = new mongoose.Schema({
 
     score: {
         type: Number,
@@ -14,6 +14,6 @@ const BookCommentSchema = new mongoose.Schema({
         required: true
     }
 })
-const BookComment = mongoose.model('BookComment', BookCommentSchema);
+const BookScore = mongoose.model('BookScore', BookScoreSchema);
 
-module.exports = {BookComment}
+module.exports = {BookScore}

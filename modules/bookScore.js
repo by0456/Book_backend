@@ -3,17 +3,17 @@ const { mongoose } = require('mongoose');
 const bodyParser = require('body-parser');
 
 
-const { Favourite, User, BookComment } = require('../db/models');
+const { Favourite, User, BookComment, BookScore } = require('../db/models');
 
-exports.getComment = (req, res) => {
-    BookComment.find({
+exports.getScore = (req, res) => {
+    BookScore.find({
         _favouriteId: req.params.id
-    }).then((comment) => {
-        res.send(comment);
+    }).then((bookScore) => {
+        res.send(bookScore);
     })
 }
 
-exports.addComment = (req, res) => {
+exports.addScore = (req, res) => {
     //console.log(req.params.id);
     Favourite.findOne({
 
@@ -26,13 +26,13 @@ exports.addComment = (req, res) => {
         }
 
         return false;
-    }).then((canAddComment) => {
-        if (canAddComment) {
-            let newComment = new BookComment({
-                comment: req.body.comment,
+    }).then((canAddScore) => {
+        if (canAddScore) {
+            let newBookScore = new BookScore({
+                score: req.body.score,
                 _favouriteId: req.params.id
             });
-            newComment.save().then((newTaskDoc) => {
+            newBookScore.save().then((newTaskDoc) => {
                 res.send(newTaskDoc);
             })
         } else {
@@ -41,7 +41,7 @@ exports.addComment = (req, res) => {
     })
 }
 
-exports.editComment = (req, res) => {
+exports.editScore = (req, res) => {
 
     Favourite.findOne({
         _id: req.params.id,
@@ -51,15 +51,16 @@ exports.editComment = (req, res) => {
             return true;
         }
         return false;
-    }).then((canUpdateComment) => {
-        if (canUpdateComment) {
-            BookComment.findOneAndUpdate({
-                _id: req.params.commentId,
+    }).then((canUpdateBookScore) => {
+        if (canUpdateBookScore) {
+            BookScore.findOneAndUpdate({
+                _id: req.params.bookScoreId,
                 _favouriteId: req.params.id
             }, {
                     $set: req.body
                 }
             ).then(() => {
+                //console.log( req.params.bookScoreId);
                 res.send({ message: 'Updated successfully.' })
             })
         } else {
@@ -68,7 +69,7 @@ exports.editComment = (req, res) => {
     })
 }
 
-exports.deleteComment = (req, res) => {
+exports.deleteScore = (req, res) => {
 
     Favourite.findOne({
         _id: req.params.id,
@@ -80,11 +81,11 @@ exports.deleteComment = (req, res) => {
         }
 
         return false;
-    }).then((canDeleteComment) => {
+    }).then((canDeleteScore) => {
 
-        if (canDeleteComment) {
-            BookComment.findOneAndRemove({
-                _id: req.params.commentId,
+        if (canDeleteScore) {
+            BookScore.findOneAndRemove({
+                _id: req.params.bookScoreId,
                 _favouriteId: req.params.id
             }).then((removedTaskDoc) => {
                 res.send(removedTaskDoc);
