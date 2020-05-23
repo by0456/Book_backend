@@ -44,7 +44,7 @@ UserSchema.methods.toJSON = function () {
 UserSchema.methods.generateAccessAuthToken = function () {
     const user = this;
     return new Promise((resolve, reject) => {
-    
+
         jwt.sign({ _id: user._id.toHexString() }, jwtSecret, { expiresIn: "15m" }, (err, token) => {
             if (!err) {
                 resolve(token);
@@ -57,7 +57,7 @@ UserSchema.methods.generateAccessAuthToken = function () {
 }
 
 UserSchema.methods.generateRefreshAuthToken = function () {
-    
+
     return new Promise((resolve, reject) => {
         crypto.randomBytes(64, (err, buf) => {
             if (!err) {
@@ -139,7 +139,7 @@ UserSchema.pre('save', function (next) {
     let costFactor = 10;
 
     if (user.isModified('password')) {
-       
+
         bcrypt.genSalt(costFactor, (err, salt) => {
             bcrypt.hash(user.password, salt, (err, hash) => {
                 user.password = hash;

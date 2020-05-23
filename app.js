@@ -7,4 +7,7 @@ const bodyParser = require('body-parser');
 
 const jwt = require('jsonwebtoken');
 
-const { List, Task, User } = require('./db/models');
+const { Favourite, User } = require('./db/models');
+
+const favourite = require('./modules/favourite');
+const users = require('./modules/users');
