@@ -86,8 +86,8 @@ exports.deleteComment = (req, res) => {
             BookComment.findOneAndRemove({
                 _id: req.params.commentId,
                 _favouriteId: req.params.id
-            }).then((removedTaskDoc) => {
-                res.send(removedTaskDoc);
+            }).then((removedCommentDoc) => {
+                res.send(removedCommentDoc);
             })
         } else {
             res.sendStatus(404);

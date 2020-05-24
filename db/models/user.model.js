@@ -45,11 +45,10 @@ UserSchema.methods.generateAccessAuthToken = function () {
     const user = this;
     return new Promise((resolve, reject) => {
 
-        jwt.sign({ _id: user._id.toHexString() }, jwtSecret, { expiresIn: "15m" }, (err, token) => {
+        jwt.sign({ _id: user._id.toHexString() }, jwtSecret, { expiresIn: "20m" }, (err, token) => {
             if (!err) {
                 resolve(token);
             } else {
-                // there is an error
                 reject();
             }
         })
@@ -79,7 +78,7 @@ UserSchema.methods.createSession = function () {
 
         return refreshToken;
     }).catch((e) => {
-        return Promise.reject('Failed to save session to database.\n' + e);
+        return Promise.reject('Failed to save.\n' + e);
     })
 }
 

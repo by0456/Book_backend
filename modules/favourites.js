@@ -2,11 +2,11 @@ const { mongoose } = require('mongoose');
 
 const bodyParser = require('body-parser');
 
-const { Favourite, User } = require('../db/models');
+const { Favourite, User, BookComment, BookScore } = require('../db/models');
 
 exports.getFavourite = (req, res) => {
     Favourite.find({
-        //_userId: req.user_id
+        _userId: req.user_id
     }).then((lists) => {
         res.send(lists);
     }).catch((e) => {
@@ -16,7 +16,8 @@ exports.getFavourite = (req, res) => {
 
 exports.getFavouriteDetails = (req, res) => {
     Favourite.find({
-        _id: req.params.id
+        _id: req.params.id,
+        _userId: req.user_id
     }).then((lists) => {
         res.send(lists);
     }).catch((e) => {
@@ -39,17 +40,36 @@ exports.addFavourite = (req, res) => {
         title,
         authors,
         description,
+        _userId: req.user_id
     });
     newFavourite.save().then((listDoc) => {
         res.send(listDoc);
     })
 }
 
+let deleteCommentFromFavourite = (_favouriteId) => {
+    BookComment.deleteMany({
+        _favouriteId
+    }).then(() => { })
+}
+
+let deleteScoreFromFavourite = (_favouriteId) => {
+    BookScore.deleteMany({
+        _favouriteId
+    }).then(() => { })
+}
+
+
 exports.deleteFavourite = (req, res) => {
     
     Favourite.findOneAndRemove({
         _id: req.params.id,
-    }).then((removedListDoc) => {
-        res.send(removedListDoc);
+        _userId: req.user_id
+    }).then((removedFavouriteDoc) => {
+        res.send(removedFavouriteDoc);
+
+        deleteCommentFromFavourite(removedFavouriteDoc._id);
+        deleteScoreFromFavourite(removedFavouriteDoc._id);
     })
 }
+

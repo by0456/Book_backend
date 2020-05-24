@@ -21,6 +21,10 @@ const FavouriteSchema = new mongoose.Schema({
         minlength: 1,
         trim: true
 
+    },
+    _userId: {
+        type: mongoose.Types.ObjectId,
+        required: true
     }
 })
 const Favourite = mongoose.model('Favourite', FavouriteSchema);

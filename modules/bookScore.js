@@ -87,8 +87,8 @@ exports.deleteScore = (req, res) => {
             BookScore.findOneAndRemove({
                 _id: req.params.bookScoreId,
                 _favouriteId: req.params.id
-            }).then((removedTaskDoc) => {
-                res.send(removedTaskDoc);
+            }).then((removedScoreDoc) => {
+                res.send(removedScoreDoc);
             })
         } else {
             res.sendStatus(404);

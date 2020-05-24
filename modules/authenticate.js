@@ -1,6 +1,6 @@
 const { mongoose } = require('mongoose');
 
-//const { Favourite, User } = require('../db/models');
+const { User } = require('../db/models');
 
 const bodyParser = require('body-parser');
 
